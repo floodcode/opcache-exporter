@@ -10,6 +10,12 @@ This is a simple server that scrapes OPcache status and exports it via HTTP for 
 make build
 ```
 
+### Running
+
+```
+./opcache_exporter [flags]
+```
+
 ## License
 
 The MIT License, see [LICENSE](/LICENSE)
