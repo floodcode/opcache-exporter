@@ -1,5 +1,7 @@
 # OPcache Exporter for Prometheus
 
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/crowdin/opcache-exporter)
+
 This is a simple server that scrapes OPcache status and exports it via HTTP for Prometheus consumption.
 
 ## Development
@@ -28,5 +30,14 @@ Flags:
 ```
 
 ## License
+<pre>
+Copyright © 2019 Crowdin
 
-The MIT License, see [LICENSE](/LICENSE)
+The Crowdin OPcache exporter is licensed under the MIT License. 
+See the LICENSE file distributed with this work for additional 
+information regarding copyright ownership.
+
+Except as contained in the LICENSE file, the name(s) of the above copyright
+holders shall not be used in advertising or otherwise to promote the sale,
+use or other dealings in this Software without prior written authorization.
+</pre>
