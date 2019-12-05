@@ -1,4 +1,4 @@
-module gitlab.com/crosscone/tool/opcache-exporter
+module github.com/crowdin/opcache-exporter
 
 go 1.13
 
