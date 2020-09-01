@@ -19,7 +19,7 @@ func main() {
 	var (
 		listenAddress = kingpin.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9101").String()
 		metricsPath   = kingpin.Flag("web.telemetry-path", "Path under which to expose metrics.").Default("/metrics").String()
-		fcgiURI       = kingpin.Flag("opcache.fcgi-uri", "Connection string to FastCGI server.").Default("127.0.0.1:9000").String()
+		fcgiURI       = kingpin.Flag("opcache.fcgi-uri", "Connection string to FastCGI server.").Default("tcp://127.0.0.1:9000").String()
 		scriptPath    = kingpin.Flag("opcache.script-path", "Path to PHP script which echoes json-encoded OPcache status").Default("").String()
 		scriptDir     = kingpin.Flag("opcache.script-dir", "Path to directory where temporary PHP file will be created").Default("").String()
 	)

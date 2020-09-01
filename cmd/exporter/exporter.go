@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"errors"
 	"io/ioutil"
+	"net/url"
+	"strings"
 	"sync"
-
 	"github.com/prometheus/client_golang/prometheus"
 
 	fcgiclient "github.com/tomasen/fcgi_client"
@@ -63,18 +64,24 @@ func intMetric(value int64) float64 {
 type Exporter struct {
 	mutex sync.RWMutex
 
-	uri        string
+	uri        *url.URL
 	scriptPath string
 }
 
 // NewExporter returns an initialized Exporter.
-func NewExporter(uri, scriptPath string) (*Exporter, error) {
+func NewExporter(rawUri string, scriptPath string) (*Exporter, error) {
+	// fallback for old default value
+	if !strings.Contains(rawUri, "://") {
+		rawUri = "tcp://" + rawUri
+	}
+	parsedUri, err := url.Parse(rawUri)
+
 	exporter := &Exporter{
-		uri:        uri,
+		uri:        parsedUri,
 		scriptPath: scriptPath,
 	}
 
-	return exporter, nil
+	return exporter, err
 }
 
 // Describe describes all the metrics ever exported by the OPcache exporter.
@@ -145,7 +152,12 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 }
 
 func (e *Exporter) getOpcacheStatus() (*OPcacheStatus, error) {
-	client, err := fcgiclient.Dial("tcp", e.uri)
+	host := e.uri.Host
+	if e.uri.Scheme == "unix" {
+		host = e.uri.Path
+	}
+
+	client, err := fcgiclient.Dial(e.uri.Scheme, host)
 	if err != nil {
 		return nil, err
 	}
